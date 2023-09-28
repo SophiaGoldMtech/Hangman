@@ -32,34 +32,37 @@ function displayGuessedLetters() {
 
 function addGuess(e) {
     if (e.charCode === 13) {
-        let guess = document.getElementById('guess').value;
-        if (guess.length > 1) {
-            if (guess === theWord) {
-                updatePuzzle()
-                solvedPuzzle(true)
-            } else {
-                alert("That's not quite right.");
-                decrementCounter();
-            }
-        } else {
-            if (!incorrectGuess.includes(guess) && !correctLetters.includes(guess)) {
-                if (!theWordArray.includes(guess)) {
-                    incorrectGuess.push(guess);
-                    displayGuessedLetters();
-                    decrementCounter();
+        let guess = document.getElementById('guess').value.toLowerCase();
+        console.log(guess.charCode)
+        if (guess.charCodeAt(0) >= 97 && guess.charCodeAt(0) <= 122) {
+            if (guess.length > 1) {
+                if (guess === theWord) {
+                    solvedPuzzle(true)
                 } else {
-                    correctLetters.push(guess);
-                    updatePuzzle();
-                    console.log("Win Counter: ", winCounter)
-                    console.log("Word Length: ", theWord.length)
-                    if (winCounter === theWord.length) {
-                        updatePuzzle()
-                        solvedPuzzle(true)
-                    }
+                    alert("That's not quite right.");
+                    decrementCounter();
                 }
             } else {
-                alert("You already guessed that letter!")
+                if (!incorrectGuess.includes(guess) && !correctLetters.includes(guess)) {
+                    if (!theWordArray.includes(guess)) {
+                        incorrectGuess.push(guess);
+                        displayGuessedLetters();
+                        decrementCounter();
+                    } else {
+                        correctLetters.push(guess);
+                        updatePuzzle();
+                        console.log("Win Counter: ", winCounter)
+                        console.log("Word Length: ", theWord.length)
+                        if (winCounter === theWord.length) {
+                            solvedPuzzle(true)
+                        }
+                    }
+                } else {
+                    alert("You already guessed that letter!")
+                }
             }
+        } else {
+            alert("Whoa there! Letters only ya dummy Try again.")
         }
         document.getElementById("guess").value="";
     }
@@ -103,12 +106,12 @@ function decrementCounter() {
     document.getElementById("counter").textContent = "Guesses left: " + counter;
     if(counter === Math.round(numGuesses * .75)){
         counterDiv.classList.remove("green");
-        counterDiv.classList.add("orange");
-    } else if(counter === Math.round(numGuesses * .5)) {
-        counterDiv.classList.remove("orange");
         counterDiv.classList.add("yellow");
-    } else if (counter === 0) {
+    } else if(counter === Math.round(numGuesses * .5)) {
         counterDiv.classList.remove("yellow");
+        counterDiv.classList.add("orange");
+    } else if (counter === 0) {
+        counterDiv.classList.remove("orange");
         counterDiv.classList.add("red");
         solvedPuzzle(false)
     }
@@ -116,11 +119,13 @@ function decrementCounter() {
 
 function solvedPuzzle(didWin) {
     correctLetters = theWordArray;
+    updatePuzzle()
     document.getElementById('guess').disabled = true;
     if (didWin) {
-        alert("You have won! Congratulations");
+        setTimeout(function() {alert("You have won! Congratulations! The word was " + theWord + "!");}, 0)
+        
     } else {
-        alert("You are a massive loser! The word was " + theWord);
+        setTimeout(function() {alert("You are a massive loser! The word was " + theWord)}, 0);
     }
 }
 
