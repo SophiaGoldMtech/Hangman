@@ -1,15 +1,38 @@
 .green {
-  color: green;
+  color: #50c878;
 }
 
 .orange {
-  color: orange;
+  color: #faa60c;
 }
 
 .yellow {
-  color: #cfcf15;
+  color: #f8f867;
 }
 
 .red {
   color: red;
+}
+
+.container {
+  min-width: 500px;
+  min-height: 500px;
+  background-color: steelblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.smallContainer {
+  border: white 2px dotted;
+  padding: 50px 100px;
+  color: #fdfdfd;
+}
+
+.bigContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
 }

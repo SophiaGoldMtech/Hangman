@@ -385,3 +385,4 @@ function solvedPuzzle(didWin) {
     }
 }
 console.log(theWord);
+ 
